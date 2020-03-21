@@ -10,12 +10,31 @@
 (setq smtpmail-stream-type 'ssl)
 (setq smtpmail-smtp-service 465)
 
-;; Miscellaneous
+;; Doom
 
 (setq doom-font (font-spec :family "monospace" :size 14))
 (setq doom-theme 'doom-one)
+
+;; Org
+
 (setq org-directory "~/org/")
+
+;; Calendar
+
+;; Start week with monday
+(setq calendar-week-start-day 1)
+;; Use ISO date format
+(setq calendar-date-style 'iso)
+;; Configure holidays
+(setq calendar-holidays (append holiday-general-holidays holiday-christian-holidays))
+
+;; Miscellaneous
+
+;; Display line numbers
 (setq display-line-numbers-type t)
+;; Show buffer name in frame title
+(setq-default frame-title-format '("Emacs - %b"))
+
 
 ;; Packages
 
@@ -30,6 +49,16 @@
 (after! gcmh
   (setq gcmh-low-cons-threshold 80000000)
   (setq gcmh-high-cons-threshold most-positive-fixnum))
+
+(after! anzu
+  (global-anzu-mode))
+
+(use-package! dashboard
+  :init
+  ;; Configure dashobard items
+  (setq dashboard-items '((recents . 5) (bookmarks . 5) (projects . 5) (agenda . 5)))
+  (setq dashboard-set-footer nil)
+  (dashboard-setup-startup-hook))
 
 (use-package! company-quickhelp
   :hook (company-mode . company-quickhelp-mode)

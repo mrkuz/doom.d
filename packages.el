@@ -2,3 +2,4 @@
 ;;; $DOOMDIR/packages.el
 
 (package! company-quickhelp)
+(package! dashboard)
