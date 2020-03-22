@@ -53,6 +53,13 @@
   (setq org-reverse-datetree-week-format "%Y-%m KW%V")
   (setq org-reverse-datetree-year-format "%Y"))
 
+(use-package! org-sticky-header
+  :hook (org-mode . org-sticky-header-mode)
+  :config
+  (setq org-sticky-header-always-show-header nil)
+  (setq org-sticky-header-full-path 'full)
+  (setq org-sticky-header-outline-path-separator " → "))
+
 ;; Calendar
 
 ;; Start week with monday

@@ -3,3 +3,4 @@
 
 (package! company-quickhelp)
 (package! org-reverse-datetree)
+(package! org-sticky-header)
