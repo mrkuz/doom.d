@@ -46,6 +46,13 @@
 ;; Show date/time in modeline
 (display-time-mode 1)
 
+;; Buffers
+
+(setq ibuffer-use-other-window t)
+(map! "C-x b" #'ivy-switch-buffer)
+(map! "C-x B" #'+ivy/switch-workspace-buffer)
+(map! "C-x C-b" #'ibuffer)
+
 ;; Packages
 
 (after! company
@@ -102,8 +109,32 @@
 (define-key my-map (kbd "v g") 'magit-file-dispatch)
 (define-key my-map (kbd "v G") 'magit-dispatch)
 (define-key my-map (kbd "TAB") 'fold/toggle)
+(define-key my-map (kbd "1") (lambda () (interactive ) (my-workspace-switch "main")))
+(define-key my-map (kbd "2") (lambda () (interactive ) (my-workspace-switch "2")))
+(define-key my-map (kbd "3") (lambda () (interactive ) (my-workspace-switch "3")))
+(define-key my-map (kbd "4") (lambda () (interactive ) (my-workspace-switch "4")))
+(define-key my-map (kbd "5") (lambda () (interactive ) (my-workspace-switch "5")))
+(define-key my-map (kbd "6") (lambda () (interactive ) (my-workspace-switch "6")))
+(define-key my-map (kbd "7") (lambda () (interactive ) (my-workspace-switch "7")))
+(define-key my-map (kbd "8") (lambda () (interactive ) (my-workspace-switch "8")))
+(define-key my-map (kbd "9") (lambda () (interactive ) (my-workspace-switch "9")))
 
 ;; Functions
+
+(defun my-create-scratch (name)
+  "Create a new scratch buffer."
+  (interactive)
+  (let ((scratch (generate-new-buffer (concat "*scratch<" name ">*"))))
+    (switch-to-buffer scratch)
+    (funcall initial-major-mode)
+    scratch))
+
+(defun my-workspace-switch (name)
+  (if (+workspace-exists-p name)
+      (+workspace-switch name)
+    (progn
+      (+workspace-switch name t)
+      (my-create-scratch name))))
 
 (defun my-open-config ()
   "Open config file."
