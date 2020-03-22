@@ -43,7 +43,7 @@
                                  "** %<%H:%M> %:link%?")
                                 ("J" "Journal" entry (file+olp+datetree "journal.org")
                                  "** %<%H:%M> %?")
-                                ))
+                                )))
 
 (use-package! org-reverse-datetree
   :after org
