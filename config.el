@@ -167,6 +167,7 @@
 (define-key my-map (kbd "8") (lambda () (interactive ) (my-workspace-switch "8")))
 (define-key my-map (kbd "9") (lambda () (interactive ) (my-workspace-switch "9")))
 (define-key my-map (kbd "?") 'which-key-show-top-level)
+(define-key my-map (kbd "SPC") 'company-complete)
 
 ;; Functions
 
