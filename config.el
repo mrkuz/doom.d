@@ -89,7 +89,14 @@
 (map! "C-x B" #'+ivy/switch-workspace-buffer)
 (map! "C-x C-b" #'ibuffer)
 
-;; Packages
+;; Navigation
+
+(after! ace-window
+  :config
+  ;; Use letters instead of numbers
+  (setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h)))
+
+;; Auto completion
 
 (after! company
   ;; Show completion after short delay
@@ -98,6 +105,18 @@
   (setq company-show-numbers t)
   ;; Limit results
   (setq company-tooltip-limit 9))
+
+(use-package! company-quickhelp
+  :hook (company-mode . company-quickhelp-mode)
+  :config
+  ;; Configure delay util help is shown
+  (setq company-quickhelp-delay 1.2)
+  ;; Limit nubmer of lines
+  (setq company-quickhelp-max-lines 20)
+  ;; Allow colors and fonts
+  (setq company-quickhelp-use-propertized-text t))
+
+;; Other packages
 
 (after! gcmh
   (setq gcmh-low-cons-threshold 80000000)
@@ -115,16 +134,6 @@
                 (all-the-icons-octicon "repo" :v-adjust -0.1 :height 1.2 :face 'font-lock-string-face)
                 " ")))
 
-(use-package! company-quickhelp
-  :hook (company-mode . company-quickhelp-mode)
-  :config
-  ;; Configure delay util help is shown
-  (setq company-quickhelp-delay 1.2)
-  ;; Limit nubmer of lines
-  (setq company-quickhelp-max-lines 20)
-  ;; Allow colors and fonts
-  (setq company-quickhelp-use-propertized-text t))
-
 ;; Key bindings
 
 (setq my-map (make-sparse-keymap))
@@ -134,6 +143,7 @@
 (define-key my-map (kbd "f j") 'my-open-journal)
 (define-key my-map (kbd "f n") 'my-open-notes)
 (define-key my-map (kbd "f t") 'my-open-todos)
+(define-key my-map (kbd "s w") 'ace-window)
 (define-key my-map (kbd "v d") 'git-gutter:popup-hunk)
 (define-key my-map (kbd "v g") 'magit-file-dispatch)
 (define-key my-map (kbd "v G") 'magit-dispatch)
