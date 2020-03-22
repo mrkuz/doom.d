@@ -16,12 +16,12 @@
        modeline            ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash         ; blink the current line after jumping
        ;;ophints           ; highlight the region an operation acts on
-       ;;(popup +defaults) ; tame sudden yet inevitable temporary windows
+       (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;pretty-code       ; replace bits of code with pretty symbols
        ;;tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
-       ;;vc-gutter         ; vcs diff in the fringe
+       vc-gutter           ; vcs diff in the fringe
        ;;vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        ;;window-select     ; visually switch windows
        ;;workspaces        ; tab emulation, persistence & separate workspaces
@@ -44,7 +44,7 @@
        ;;dired             ; making dired pretty [functional]
        ;;electric          ; smarter, keyword-based electric-indent
        ;;ibuffer           ; interactive buffer management
-       ;;vc                ; version-control and Emacs, sitting in a tree
+       vc                  ; version-control and Emacs, sitting in a tree
 
        :term
        ;;eshell            ; a consistent, cross-platform shell (WIP)
@@ -67,7 +67,7 @@
        ;;(eval +overlay)   ; run code, run (also, repls)
        ;;lookup            ; navigate your code and its documentation
        ;;lsp
-       ;;magit             ; a git porcelain for Emacs
+       magit               ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders

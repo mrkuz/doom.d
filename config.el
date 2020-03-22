@@ -81,6 +81,10 @@
 (define-key my-map (kbd "f j") 'my-open-journal)
 (define-key my-map (kbd "f n") 'my-open-notes)
 (define-key my-map (kbd "f t") 'my-open-todos)
+(define-key my-map (kbd "v d") 'git-gutter:popup-hunk)
+(define-key my-map (kbd "v g") 'magit-file-dispatch)
+(define-key my-map (kbd "v G") 'magit-dispatch)
+
 
 ;; Functions
 
