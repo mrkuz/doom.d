@@ -37,6 +37,15 @@
 ;; Show buffer name in frame title
 (setq-default frame-title-format '("Emacs - %b"))
 
+;; Modeline
+
+;;;; Show only calendar week
+(setq display-time-format " W%V")
+;; Hide system load
+(setq display-time-default-load-average nil)
+;; Show date/time in modeline
+(display-time-mode 1)
+
 ;; Packages
 
 (after! company
