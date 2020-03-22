@@ -20,6 +20,8 @@
 (setq org-directory "~/org/")
 ;; Start indendet
 (setq org-startup-indented t)
+;; Allow setting refile targets as local file variable
+(put 'org-refile-targets 'safe-local-variable (lambda (_) t))
 
 ;; Calendar
 
@@ -32,10 +34,14 @@
 
 ;; Miscellaneous
 
+;; Enable all disabled commands
+(setq disabled-command-hook nil)
 ;; Display line numbers
 (setq display-line-numbers-type t)
 ;; Show buffer name in frame title
 (setq-default frame-title-format '("Emacs - %b"))
+;; Use bash as default shell
+(setq explicit-shell-file-name "/bin/bash")
 
 ;; Modeline
 
@@ -118,6 +124,7 @@
 (define-key my-map (kbd "7") (lambda () (interactive ) (my-workspace-switch "7")))
 (define-key my-map (kbd "8") (lambda () (interactive ) (my-workspace-switch "8")))
 (define-key my-map (kbd "9") (lambda () (interactive ) (my-workspace-switch "9")))
+(define-key my-map (kbd "?") 'which-key-show-top-level)
 
 ;; Functions
 
