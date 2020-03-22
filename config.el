@@ -21,6 +21,12 @@
 (after! org
   ;; Set up diary file
   (setq diary-file "~/org/diary")
+  ;; Include diary in agenda
+  (setq org-agenda-include-diary t)
+  ;; Don't indent lines after editing
+  (setq org-edit-src-content-indentation 0)
+  ;; Insert log notes into drawer
+  (setq org-log-into-drawer t)
   ;; TODO keywords
   (setq org-todo-keywords '((sequence "TODO" "WIP" "|" "DONE" "MOVED" "CANCELED")))
   ;; Add CLOSED timestamp to DONE items
