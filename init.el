@@ -2,7 +2,7 @@
 
 (doom! :input
        :completion
-       company             ; the ultimate code completion backend
+       company                 ; the ultimate code completion backend
        (ivy +fuzzy +prescient) ; a search engine for love and life
 
        :ui
@@ -15,13 +15,9 @@
        workspaces          ; tab emulation, persistence & separate workspaces
 
        :editor
-       ;;file-templates    ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
-       ;;(format +onsave)  ; automated prettiness
        ;;multiple-cursors  ; editing in many places at once
-       ;;rotate-text       ; cycle region at point between text candidates
        snippets            ; my elves. They type so I don't have to
-       ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
        dired               ; making dired pretty [functional]
@@ -37,22 +33,14 @@
        :checkers
        ;;syntax            ; tasing you for every semicolon you forget
        ;;spell             ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
 
        :tools
-       ;;ansible
-       ;;direnv
        ;;docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;(eval +overlay)   ; run code, run (also, repls)
        ;;lookup            ; navigate your code and its documentation
        magit               ; a git porcelain for Emacs
-       ;;make              ; run make tasks from Emacs
-       ;;pdf               ; pdf enhancements
        ;;rgb               ; creating color strings
-       ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       ;;upload            ; map local to remote projects via ssh/ftp
 
        :lang
        data                ; config/data formats
