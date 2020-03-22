@@ -20,7 +20,7 @@
        ;;(format +onsave)  ; automated prettiness
        ;;multiple-cursors  ; editing in many places at once
        ;;rotate-text       ; cycle region at point between text candidates
-       ;;snippets          ; my elves. They type so I don't have to
+       snippets            ; my elves. They type so I don't have to
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
@@ -30,9 +30,9 @@
        vc                  ; version-control and Emacs, sitting in a tree
 
        :term
-       ;;eshell            ; a consistent, cross-platform shell (WIP)
-       ;;shell             ; a terminal REPL for Emacs
-       ;;term              ; terminals in Emacs
+       eshell              ; a consistent, cross-platform shell (WIP)
+       shell               ; a terminal REPL for Emacs
+       term                ; terminals in Emacs
 
        :checkers
        ;;syntax            ; tasing you for every semicolon you forget

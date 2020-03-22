@@ -33,6 +33,8 @@
   (setq org-archive-location "~/org/.archive.org::* File: %s")
   ;; No header in archive file
   (setq org-archive-file-header-format nil)
+  ;; Custom templates
+  (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp :results none\n?\n#+END_SRC"))
   ;; Custom capture templates
   (setq org-capture-templates '(
                                 ("b" "Backlog" entry (file+olp "todo.org" "Backlog")
@@ -76,6 +78,13 @@
 (add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
 (add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
 
+;; Terminal
+
+(after! multi-term
+  :config
+  (add-to-list 'term-bind-key-alist '("C-c C-j" . term-line-mode))
+  (add-to-list 'term-bind-key-alist '("C-c C-k" . term-char-mode)))
+
 ;; Calendar
 
 ;; Start week with monday
@@ -94,7 +103,9 @@
 ;; Show buffer name in frame title
 (setq-default frame-title-format '("Emacs - %b"))
 ;; Use bash as default shell
+(setq shell-file-name "bash")
 (setq explicit-shell-file-name "/bin/bash")
+(setenv "SHELL" shell-file-name)
 ;; Set fill column
 (setq-default fill-column 100)
 
@@ -173,6 +184,7 @@
 (define-key my-map (kbd "s w") 'avy-goto-line)
 (define-key my-map (kbd "s w") 'avy-goto-word-1)
 (define-key my-map (kbd "s W") 'ace-window)
+(define-key my-map (kbd "T") 'multi-term)
 (define-key my-map (kbd "v d") 'git-gutter:popup-hunk)
 (define-key my-map (kbd "v g") 'magit-file-dispatch)
 (define-key my-map (kbd "v G") 'magit-dispatch)
@@ -186,6 +198,8 @@
 (define-key my-map (kbd "7") (lambda () (interactive ) (my-workspace-switch "7")))
 (define-key my-map (kbd "8") (lambda () (interactive ) (my-workspace-switch "8")))
 (define-key my-map (kbd "9") (lambda () (interactive ) (my-workspace-switch "9")))
+(define-key my-map (kbd "& i") 'company-yasnippet)
+(define-key my-map (kbd "& t") 'yas-describe-tables)
 (define-key my-map (kbd "?") 'which-key-show-top-level)
 (define-key my-map (kbd "SPC") 'company-complete)
 
