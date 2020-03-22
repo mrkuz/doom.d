@@ -115,13 +115,6 @@
                 (all-the-icons-octicon "repo" :v-adjust -0.1 :height 1.2 :face 'font-lock-string-face)
                 " ")))
 
-(use-package! dashboard
-  :init
-  ;; Configure dashobard items
-  (setq dashboard-items '((agenda . 5) (recents . 5) (projects . 5)))
-  (setq dashboard-set-footer nil)
-  (dashboard-setup-startup-hook))
-
 (use-package! company-quickhelp
   :hook (company-mode . company-quickhelp-mode)
   :config
