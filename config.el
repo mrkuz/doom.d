@@ -37,7 +37,6 @@
 ;; Show buffer name in frame title
 (setq-default frame-title-format '("Emacs - %b"))
 
-
 ;; Packages
 
 (after! company
@@ -54,6 +53,15 @@
 
 (after! anzu
   (global-anzu-mode))
+
+(after! treemacs
+  ;; Customize face of root item
+  (set-face-attribute 'treemacs-root-face nil :height 1.0 :underline nil)
+  ;; Customize root icon
+  (setq treemacs-icon-root-png
+        (concat " "
+                (all-the-icons-octicon "repo" :v-adjust -0.1 :height 1.2 :face 'font-lock-string-face)
+                " ")))
 
 (use-package! dashboard
   :init
@@ -84,7 +92,6 @@
 (define-key my-map (kbd "v d") 'git-gutter:popup-hunk)
 (define-key my-map (kbd "v g") 'magit-file-dispatch)
 (define-key my-map (kbd "v G") 'magit-dispatch)
-
 
 ;; Functions
 
