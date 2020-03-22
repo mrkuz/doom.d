@@ -18,10 +18,40 @@
 ;; Org
 
 (setq org-directory "~/org/")
-;; Start indendet
-(setq org-startup-indented t)
-;; Allow setting refile targets as local file variable
-(put 'org-refile-targets 'safe-local-variable (lambda (_) t))
+(after! org
+  ;; TODO keywords
+  (setq org-todo-keywords '((sequence "TODO" "WIP" "|" "DONE" "MOVED" "CANCELED")))
+  ;; Add CLOSED timestamp to DONE items
+  (setq org-log-done 'time)
+  ;; Allow setting refile targets as local file variable
+  (put 'org-refile-targets 'safe-local-variable (lambda (_) t))
+  ;; Add files to the agenda
+  (setq org-agenda-files '("~/org" "~/org/mobile"))
+  ;; Set archive file
+  (setq org-archive-location "~/org/.archive.org::* File: %s")
+  ;; No header in archive file
+  (setq org-archive-file-header-format nil)
+  ;; Custom capture templates
+  (setq org-capture-templates '(
+                                ("b" "Backlog" entry (file+olp "todo.org" "Backlog")
+                                 "* TODO %:link%?" :prepend t)
+                                ("n" "Next" entry (file+olp "todo.org" "Next")
+                                 "* TODO %?" :prepend t)
+                                ("t" "Todo" entry (file+function "todo.org" org-reverse-datetree-goto-read-date-in-file)
+                                 "* TODO %?\nSCHEDULED: <%(org-read-date nil nil org-read-date-final-answer)>")
+                                ("N" "Note" entry (file+olp+datetree "notes.org")
+                                 "** %<%H:%M> %:link%?")
+                                ("J" "Journal" entry (file+olp+datetree "journal.org")
+                                 "** %<%H:%M> %?")
+                                ))
+
+(use-package! org-reverse-datetree
+  :after org
+  :config
+  ;; Customize defaut date tree format
+  (setq org-reverse-datetree-date-format "%Y-%m-%d %A")
+  (setq org-reverse-datetree-week-format "%Y-%m KW%V")
+  (setq org-reverse-datetree-year-format "%Y"))
 
 ;; Calendar
 
@@ -45,7 +75,7 @@
 
 ;; Modeline
 
-;;;; Show only calendar week
+;; Show only calendar week
 (setq display-time-format " W%V")
 ;; Hide system load
 (setq display-time-default-load-average nil)

@@ -82,7 +82,7 @@
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;markdown          ; writing docs for people to ignore
        ;;nix               ; I hereby declare "nix geht mehr!"
-       ;;(org              ; organize your plain life in plain text
+       (org)               ; organize your plain life in plain text
         ;;+dragndrop       ; drag & drop files/images into org buffers
         ;;+hugo            ; use Emacs for hugo blogging
         ;;+pandoc          ; export-with-pandoc support

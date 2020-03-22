@@ -3,3 +3,4 @@
 
 (package! company-quickhelp)
 (package! dashboard)
+(package! org-reverse-datetree)
