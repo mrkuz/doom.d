@@ -19,11 +19,7 @@
        ;;file-templates    ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
        ;;(format +onsave)  ; automated prettiness
-       ;;god               ; run Emacs commands without modifier keys
-       ;;lispy             ; vim for lisp, for people who don't like vim
        ;;multiple-cursors  ; editing in many places at once
-       ;;objed             ; text object editing for the innocent
-       ;;parinfer          ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
        ;;snippets          ; my elves. They type so I don't have to
        ;;word-wrap         ; soft wrapping with language-aware indent
@@ -38,7 +34,6 @@
        ;;eshell            ; a consistent, cross-platform shell (WIP)
        ;;shell             ; a terminal REPL for Emacs
        ;;term              ; terminals in Emacs
-       ;;vterm             ; another terminals in Emacs
 
        :checkers
        ;;syntax            ; tasing you for every semicolon you forget
@@ -47,14 +42,11 @@
 
        :tools
        ;;ansible
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
-       ;;ein               ; tame Jupyter notebooks with emacs
        ;;(eval +overlay)   ; run code, run (also, repls)
        ;;lookup            ; navigate your code and its documentation
-       ;;lsp
        magit               ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pdf               ; pdf enhancements
@@ -64,30 +56,24 @@
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :lang
-       ;;data              ; config/data formats
-       ;;emacs-lisp        ; drown in parentheses
-       ;;go                ; the hipster dialect
-       ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
-       ;;markdown          ; writing docs for people to ignore
-       ;;nix               ; I hereby declare "nix geht mehr!"
+       data                ; config/data formats
+       emacs-lisp          ; drown in parentheses
+       go                  ; the hipster dialect
+       java                ; the poster child for carpal tunnel syndrome
+       javascript          ; all(hope(abandon(ye(who(enter(here))))))
+       markdown            ; writing docs for people to ignore
        (org)               ; organize your plain life in plain text
         ;;+dragndrop       ; drag & drop files/images into org buffers
         ;;+hugo            ; use Emacs for hugo blogging
         ;;+pandoc          ; export-with-pandoc support
         ;;+present)        ; using org-mode for presentations
        ;;plantuml          ; diagrams for confusing people more
-       ;;rest              ; Emacs as a REST client
-       ;;rst               ; ReST in peace
-       ;;sh                ; she sells {ba,z,fi}sh shells on the C xor
-       ;;swift             ; who asked for emoji variables?
-       ;;terra             ; Earth and Moon in alignment for performance.
-       ;;web               ; the tubes
+       rest                ; Emacs as a REST client
+       (sh +fish)          ; she sells {ba,z,fi}sh shells on the C xor
+       web                 ; the tubes
 
        :email
        :app
-       ;;calendar
-
        :config
        ;;literate
        (default +bindings +smartparens))
