@@ -10,7 +10,6 @@
        doom                ; what makes DOOM look the way it does
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        modeline            ; snazzy, Atom-inspired modeline, plus API
-       (popup +defaults)   ; tame sudden yet inevitable temporary windows
        treemacs            ; a project drawer, like neotree but cooler
        vc-gutter           ; vcs diff in the fringe
        workspaces          ; tab emulation, persistence & separate workspaces

@@ -19,6 +19,8 @@
 
 (setq org-directory "~/org/")
 (after! org
+  ;; Set up diary file
+  (setq diary-file "~/org/diary")
   ;; TODO keywords
   (setq org-todo-keywords '((sequence "TODO" "WIP" "|" "DONE" "MOVED" "CANCELED")))
   ;; Add CLOSED timestamp to DONE items
@@ -60,6 +62,20 @@
   (setq org-sticky-header-full-path 'full)
   (setq org-sticky-header-outline-path-separator " → "))
 
+(defun my-org-protocol-capture-hook ()
+  (let ((name (cdr (assoc 'name (frame-parameters)))))
+    (when (equal name "org-protocol-capture")
+      (delete-other-windows)
+      (select-frame-set-input-focus (selected-frame)))))
+
+(defun my-org-protocol-after-capture-hook ()
+  (let ((name (cdr (assoc 'name (frame-parameters)))))
+    (when (equal name "org-protocol-capture")
+      (delete-frame))))
+
+(add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
+(add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
+
 ;; Calendar
 
 ;; Start week with monday
@@ -79,6 +95,8 @@
 (setq-default frame-title-format '("Emacs - %b"))
 ;; Use bash as default shell
 (setq explicit-shell-file-name "/bin/bash")
+;; Set fill column
+(setq-default fill-column 100)
 
 ;; Modeline
 
@@ -133,6 +151,8 @@
   (global-anzu-mode))
 
 (after! treemacs
+  ;; Collapse directories
+  (setq treemacs-collapse-dirs 10)
   ;; Customize face of root item
   (set-face-attribute 'treemacs-root-face nil :height 1.0 :underline nil)
   ;; Customize root icon
