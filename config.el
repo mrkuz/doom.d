@@ -12,7 +12,7 @@
 
 ;; Doom
 
-(setq doom-font (font-spec :family "monospace" :size 14))
+(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14))
 (setq doom-theme 'doom-one)
 
 ;; Org
