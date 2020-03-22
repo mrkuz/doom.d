@@ -101,6 +101,7 @@
 (define-key my-map (kbd "v d") 'git-gutter:popup-hunk)
 (define-key my-map (kbd "v g") 'magit-file-dispatch)
 (define-key my-map (kbd "v G") 'magit-dispatch)
+(define-key my-map (kbd "TAB") '+fold/toggle)
 
 ;; Functions
 
