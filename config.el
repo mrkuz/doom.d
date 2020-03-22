@@ -18,6 +18,8 @@
 ;; Org
 
 (setq org-directory "~/org/")
+;; Start indendet
+(setq org-startup-indented t)
 
 ;; Calendar
 
@@ -56,7 +58,7 @@
 (use-package! dashboard
   :init
   ;; Configure dashobard items
-  (setq dashboard-items '((recents . 5) (bookmarks . 5) (projects . 5) (agenda . 5)))
+  (setq dashboard-items '((agenda . 5) (recents . 5) (projects . 5)))
   (setq dashboard-set-footer nil)
   (dashboard-setup-startup-hook))
 
