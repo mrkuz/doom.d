@@ -200,6 +200,32 @@
          ("C-<f2>" . bm-toggle))
 )
 
+;; Pandoc integration
+(use-package pandoc-mode
+  :commands pandoc-mode)
+
+;; Simple presentations
+(use-package! org-present
+  :config
+  (add-hook 'org-present-mode-hook
+            (lambda ()
+              (org-present-big)
+              (org-display-inline-images)
+              (org-present-hide-cursor)
+              (org-present-read-only)))
+  (add-hook 'org-present-mode-quit-hook
+            (lambda ()
+              (org-present-small)
+              (org-remove-inline-images)
+              (org-present-show-cursor)
+              (org-present-read-write))))
+
+;; Reveal.js
+(use-package ox-reveal
+  :after ox
+  :config
+  (setq org-reveal-root "file:///~/opt/reveal.js/"))
+
 ;; Key bindings
 
 (setq my-map (make-sparse-keymap))

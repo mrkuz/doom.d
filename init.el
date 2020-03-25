@@ -6,7 +6,7 @@
        (ivy +fuzzy +prescient) ; a search engine for love and life
 
        :ui
-       ;;deft              ; notational velocity for Emacs
+       deft                ; notational velocity for Emacs
        doom                ; what makes DOOM look the way it does
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        modeline            ; snazzy, Atom-inspired modeline, plus API
@@ -48,11 +48,10 @@
        java                ; the poster child for carpal tunnel syndrome
        javascript          ; all(hope(abandon(ye(who(enter(here))))))
        markdown            ; writing docs for people to ignore
-       (org)               ; organize your plain life in plain text
-        ;;+dragndrop       ; drag & drop files/images into org buffers
-        ;;+hugo            ; use Emacs for hugo blogging
-        ;;+pandoc          ; export-with-pandoc support
-        ;;+present)        ; using org-mode for presentations
+       (org                ; organize your plain life in plain text
+          +dragndrop       ; drag & drop files/images into org buffers
+          +hugo            ; use Emacs for hugo blogging
+          +pandoc)         ; export-with-pandoc support
        plantuml            ; diagrams for confusing people more
        rest                ; Emacs as a REST client
        (sh +fish)          ; she sells {ba,z,fi}sh shells on the C xor

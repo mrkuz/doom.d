@@ -8,3 +8,7 @@
 (package! string-inflection)
 (package! goto-last-change)
 (package! bm)
+(package! pandoc-mode)
+(package! org-present
+  :recipe (:host github :repo "rlister/org-present"))
+(package! ox-reveal)
