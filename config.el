@@ -194,14 +194,14 @@
   :commands goto-last-change)
 
 ;; Visual bookmarks
-(use-package bm
+(use-package! bm
   :bind (("<f2>" . bm-next)
          ("S-<f2>" . bm-previous)
          ("C-<f2>" . bm-toggle))
 )
 
 ;; Pandoc integration
-(use-package pandoc-mode
+(use-package! pandoc-mode
   :commands pandoc-mode)
 
 ;; Simple presentations
@@ -221,10 +221,21 @@
               (org-present-read-write))))
 
 ;; Reveal.js
-(use-package ox-reveal
+(use-package! ox-reveal
   :after ox
   :config
   (setq org-reveal-root "file:///~/opt/reveal.js/"))
+
+;; Deft
+(use-package! deft
+  :config
+  (setq deft-directory "~/Notes/deft/")
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-org-mode-title-prefix t)
+  (setq deft-file-naming-rules
+      '((noslash . "-")
+        (nospace . "-")
+        (case-fn . downcase))))
 
 ;; Key bindings
 
@@ -237,6 +248,7 @@
 (define-key my-map (kbd "M-u") 'string-inflection-underscore)
 (define-key my-map (kbd "M-U") 'string-inflection-upcase)
 (define-key my-map (kbd "M-x") 'string-inflection-all-cycle)
+(define-key my-map (kbd "d") 'deft)
 (define-key my-map (kbd "f c") 'my-open-config)
 (define-key my-map (kbd "f j") 'my-open-journal)
 (define-key my-map (kbd "f n") 'my-open-notes)
