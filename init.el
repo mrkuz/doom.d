@@ -16,7 +16,7 @@
 
        :editor
        fold                ; (nigh) universal code folding
-       ;;multiple-cursors  ; editing in many places at once
+       multiple-cursors    ; editing in many places at once
        snippets            ; my elves. They type so I don't have to
 
        :emacs
@@ -31,16 +31,15 @@
        term                ; terminals in Emacs
 
        :checkers
-       ;;syntax            ; tasing you for every semicolon you forget
-       ;;spell             ; tasing you for misspelling mispelling
+       syntax              ; tasing you for every semicolon you forget
+       spell               ; tasing you for misspelling mispelling
 
        :tools
-       ;;docker
-       ;;(eval +overlay)   ; run code, run (also, repls)
-       ;;lookup            ; navigate your code and its documentation
+       docker
+       (eval +overlay)     ; run code, run (also, repls)
+       lookup              ; navigate your code and its documentation
        magit               ; a git porcelain for Emacs
-       ;;rgb               ; creating color strings
-       ;;tmux              ; an API for interacting with tmux
+       rgb                 ; creating color strings
 
        :lang
        data                ; config/data formats
@@ -54,7 +53,7 @@
         ;;+hugo            ; use Emacs for hugo blogging
         ;;+pandoc          ; export-with-pandoc support
         ;;+present)        ; using org-mode for presentations
-       ;;plantuml          ; diagrams for confusing people more
+       plantuml            ; diagrams for confusing people more
        rest                ; Emacs as a REST client
        (sh +fish)          ; she sells {ba,z,fi}sh shells on the C xor
        web                 ; the tubes

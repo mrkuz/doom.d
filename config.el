@@ -178,6 +178,13 @@
                 (all-the-icons-octicon "repo" :v-adjust -0.1 :height 1.2 :face 'font-lock-string-face)
                 " ")))
 
+(after! flyspell
+  (unbind-key "C-;" flyspell-mode-map))
+
+(after! plantuml-mode
+  (setq plantuml-jar-path "~/opt/plantuml/plantuml.jar")
+  (setq org-plantuml-jar-path plantuml-jar-path))
+
 ;; Key bindings
 
 (setq my-map (make-sparse-keymap))
@@ -204,6 +211,9 @@
 (define-key my-map (kbd "7") (lambda () (interactive ) (my-workspace-switch "7")))
 (define-key my-map (kbd "8") (lambda () (interactive ) (my-workspace-switch "8")))
 (define-key my-map (kbd "9") (lambda () (interactive ) (my-workspace-switch "9")))
+(define-key my-map (kbd ".") 'dumb-jump-go)
+(define-key my-map (kbd ",") 'dumb-jump-back)
+(define-key my-map (kbd "$ ;") 'flyspell-auto-correct-previous-word)
 (define-key my-map (kbd "& i") 'company-yasnippet)
 (define-key my-map (kbd "& t") 'yas-describe-tables)
 (define-key my-map (kbd "?") 'which-key-show-top-level)
