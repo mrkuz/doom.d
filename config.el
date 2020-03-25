@@ -185,18 +185,44 @@
   (setq plantuml-jar-path "~/opt/plantuml/plantuml.jar")
   (setq org-plantuml-jar-path plantuml-jar-path))
 
+;; Google thing-at-point
+(use-package! google-this
+  :commands google-this)
+
+;; Go to last change
+(use-package! goto-last-change
+  :commands goto-last-change)
+
+;; Visual bookmarks
+(use-package bm
+  :bind (("<f2>" . bm-next)
+         ("S-<f2>" . bm-previous)
+         ("C-<f2>" . bm-toggle))
+)
+
 ;; Key bindings
 
 (setq my-map (make-sparse-keymap))
 (global-set-key (kbd "C-;") my-map)
 (global-set-key (kbd "C-ö") my-map)
+(define-key my-map (kbd "M-c") 'string-inflection-lower-camelcase)
+(define-key my-map (kbd "M-C") 'string-inflection-camelcase)
+(define-key my-map (kbd "M-k") 'string-inflection-kebab-case)
+(define-key my-map (kbd "M-u") 'string-inflection-underscore)
+(define-key my-map (kbd "M-U") 'string-inflection-upcase)
+(define-key my-map (kbd "M-x") 'string-inflection-all-cycle)
 (define-key my-map (kbd "f c") 'my-open-config)
 (define-key my-map (kbd "f j") 'my-open-journal)
 (define-key my-map (kbd "f n") 'my-open-notes)
 (define-key my-map (kbd "f t") 'my-open-todos)
+(define-key my-map (kbd "l g") 'google-this)
+(define-key my-map (kbd "s p") 'goto-last-change)
 (define-key my-map (kbd "s w") 'avy-goto-line)
 (define-key my-map (kbd "s w") 'avy-goto-word-1)
 (define-key my-map (kbd "s W") 'ace-window)
+(define-key my-map (kbd "t t") 'toggle-truncate-lines)
+(define-key my-map (kbd "t a") 'goto-address-mode)
+(define-key my-map (kbd "t w") 'whitespace-mode)
 (define-key my-map (kbd "T") 'multi-term)
 (define-key my-map (kbd "v d") 'git-gutter:popup-hunk)
 (define-key my-map (kbd "v g") 'magit-file-dispatch)
