@@ -37,6 +37,15 @@
 (map! "C-x C-b" #'ibuffer)
 #+END_SRC
 
+* Indention
+
+#+BEGIN_SRC emacs-lisp :results none
+;; Always use spaces
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq tab-stop-list '(0 tab-widht))
+#+END_SRC
+
 * Calendar
 
 #+BEGIN_SRC emacs-lisp :results none
