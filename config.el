@@ -185,6 +185,10 @@
   (setq plantuml-jar-path "~/opt/plantuml/plantuml.jar")
   (setq org-plantuml-jar-path plantuml-jar-path))
 
+;; Show flycheck erros as tooltip
+(use-package! flycheck-pos-tip
+  :commands flycheck-pos-tip-mode)
+
 ;; Google thing-at-point
 (use-package! google-this
   :commands google-this)
@@ -193,12 +197,24 @@
 (use-package! goto-last-change
   :commands goto-last-change)
 
+;; Go to link
+(use-package! ace-link
+  :commands ace-link)
+
 ;; Visual bookmarks
 (use-package! bm
   :bind (("<f2>" . bm-next)
          ("S-<f2>" . bm-previous)
          ("C-<f2>" . bm-toggle))
 )
+
+(after! simple-httpd
+  :config
+  (setq httpd-port 7070)
+  (setq httpd-host (system-name)))
+
+(use-package! impatient-mode
+  :commands impatient-mode)
 
 ;; Pandoc integration
 (use-package! pandoc-mode
@@ -229,7 +245,7 @@
 ;; Deft
 (use-package! deft
   :config
-  (setq deft-directory "~/Notes/deft/")
+  (setq deft-directory "~/Notes/")
   (setq deft-use-filter-string-for-filename t)
   (setq deft-org-mode-title-prefix t)
   (setq deft-file-naming-rules
@@ -254,6 +270,7 @@
 (define-key my-map (kbd "f n") 'my-open-notes)
 (define-key my-map (kbd "f t") 'my-open-todos)
 (define-key my-map (kbd "l g") 'google-this)
+(define-key my-map (kbd "s l") 'ace-link-addr)
 (define-key my-map (kbd "s p") 'goto-last-change)
 (define-key my-map (kbd "s w") 'avy-goto-line)
 (define-key my-map (kbd "s w") 'avy-goto-word-1)
@@ -319,3 +336,53 @@
   "Open todos."
   (interactive)
   (find-file (concat org-directory "/todo.org")))
+
+(defun my-prepare-diff ()
+  "Prepare two buffers for diff."
+  (interactive)
+  (let ((a (generate-new-buffer "*A*"))
+        (b (generate-new-buffer "*B*")))
+    (delete-other-windows)
+    (switch-to-buffer a)
+    (split-window-horizontally)
+    (switch-to-buffer-other-window b)
+    (other-window 1)))
+
+;; Live preview
+
+(defun my-markdown-filter (buffer)
+  (princ
+   (with-temp-buffer
+     (let ((tmp (buffer-name)))
+       (set-buffer buffer)
+       (set-buffer (markdown tmp))
+       (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css\"/>
+<body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string))))
+   (current-buffer)))
+
+(defun my-markdown-preview ()
+  "Preview markdown."
+  (interactive)
+  (unless (process-status "httpd")
+    (httpd-start))
+  (impatient-mode)
+  (imp-set-user-filter 'my-markdown-filter)
+  (imp-visit-buffer))
+
+(defun my-org-html-filter (buffer)
+  (princ
+   (with-temp-buffer
+     (insert-buffer-substring buffer)
+     (shell-command-on-region (point-min) (point-max) "pandoc -s -f org -t html5" nil t)
+     (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css\"/>
+<body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string)))
+   (current-buffer)))
+
+(defun my-org-html-preview ()
+  "Preview org buffer as HTML."
+  (interactive)
+  (unless (process-status "httpd")
+    (httpd-start))
+  (impatient-mode)
+  (imp-set-user-filter 'my-org-html-filter)
+  (imp-visit-buffer))
