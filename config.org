@@ -1,7 +1,6 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+* Personal information
 
-;; Personal information
-
+#+BEGIN_SRC emacs-lisp :results none
 (setq user-full-name "Markus")
 (setq user-mail-address "markus@bitsandbobs.net")
 (setq smtpmail-smtp-user user-mail-address)
@@ -9,39 +8,185 @@
 (setq smtpmail-smtp-server "smtp.gmail.com")
 (setq smtpmail-stream-type 'ssl)
 (setq smtpmail-smtp-service 465)
+#+END_SRC
 
-;; Doom
+* Doom
 
+#+BEGIN_SRC emacs-lisp :results none
 (setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14))
 (setq doom-theme 'doom-one)
+#+END_SRC
 
-;; Org
+* Modeline
 
+#+BEGIN_SRC emacs-lisp :results none
+;; Show date/time in modeline
+(display-time-mode 1)
+;; ... but only calendar week
+(setq display-time-format " W%V")
+;; Hide system load
+(setq display-time-default-load-average nil)
+#+END_SRC
+
+* Buffers
+
+#+BEGIN_SRC emacs-lisp :results none
+(setq ibuffer-use-other-window t)
+(map! "C-x b" #'ivy-switch-buffer)
+(map! "C-x B" #'+ivy/switch-workspace-buffer)
+(map! "C-x C-b" #'ibuffer)
+#+END_SRC
+
+* Calendar
+
+#+BEGIN_SRC emacs-lisp :results none
+;; Start week with monday
+(setq calendar-week-start-day 1)
+(setq calendar-date-style 'iso)
+(setq calendar-holidays (append holiday-general-holidays holiday-christian-holidays))
+#+END_SRC
+
+* Terminal
+
+#+BEGIN_SRC emacs-lisp :results none
+;; Use bash as default shell
+(setq shell-file-name "bash")
+(setq explicit-shell-file-name "/bin/bash")
+(setenv "SHELL" shell-file-name)
+
+(after! multi-term
+  :config
+  (add-to-list 'term-bind-key-alist '("C-c C-j" . term-line-mode))
+  (add-to-list 'term-bind-key-alist '("C-c C-k" . term-char-mode)))
+#+END_SRC
+
+* Navigation
+
+#+BEGIN_SRC emacs-lisp :results none
+(after! ace-window
+  :config
+  ;; Use letters instead of numbers
+  (setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h)))
+#+END_SRC
+
+* Completion
+
+#+BEGIN_SRC emacs-lisp :results none
+(after! company
+  (setq company-idle-delay 0.4)
+  (setq company-show-numbers t)
+  (setq company-tooltip-limit 9))
+
+(use-package! company-quickhelp
+  :hook (company-mode . company-quickhelp-mode)
+  :config
+  (setq company-quickhelp-delay 1.2)
+  (setq company-quickhelp-max-lines 20)
+  ;; Allow colors and fonts
+  (setq company-quickhelp-use-propertized-text t))
+#+END_SRC
+
+* Miscellaneous
+
+#+BEGIN_SRC emacs-lisp :results none
+;; Enable all disabled commands
+(setq disabled-command-hook nil)
+(setq-default frame-title-format '("Emacs - %b"))
+(setq-default fill-column 100)
+#+END_SRC
+
+* Doom packages
+
+#+BEGIN_SRC emacs-lisp :results none
+(after! anzu
+  (global-anzu-mode))
+
+(after! deft
+  (setq deft-directory "~/Notes/")
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-org-mode-title-prefix t)
+  (setq deft-file-naming-rules
+      '((noslash . "-")
+        (nospace . "-")
+        (case-fn . downcase))))
+
+(after! flyspell
+  (unbind-key "C-;" flyspell-mode-map))
+
+(after! gcmh
+  (setq gcmh-low-cons-threshold 80000000)
+  (setq gcmh-high-cons-threshold most-positive-fixnum))
+
+(after! plantuml-mode
+  (setq plantuml-jar-path "~/opt/plantuml/plantuml.jar")
+  (setq org-plantuml-jar-path plantuml-jar-path))
+
+(after! simple-httpd
+  (setq httpd-port 7070)
+  (setq httpd-host (system-name)))
+
+(after! treemacs
+  ;; Collapse directories
+  (setq treemacs-collapse-dirs 10)
+  ;; Customize face and icon of root item
+  (set-face-attribute 'treemacs-root-face nil :height 1.0 :underline nil)
+  (setq treemacs-icon-root-png
+        (concat " "
+                (all-the-icons-octicon "repo" :v-adjust -0.1 :height 1.2 :face 'font-lock-string-face)
+                " ")))
+#+END_SRC
+
+* Custom packages
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package! ace-link
+  :commands ace-link)
+
+(use-package! bm
+  :bind (("<f2>" . bm-next)
+         ("S-<f2>" . bm-previous)
+         ("C-<f2>" . bm-toggle)))
+
+(use-package! flycheck-pos-tip
+  :commands flycheck-pos-tip-mode)
+
+(use-package! google-this
+  :commands google-this)
+
+(use-package! goto-last-change
+  :commands goto-last-change)
+
+(use-package! impatient-mode
+  :commands impatient-mode)
+
+(use-package! pandoc-mode
+  :commands pandoc-mode)
+#+END_SRC
+
+* Org mode
+** Configuration
+
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-directory "~/org/")
 (after! org
-  ;; Set up diary file
+  (setq org-agenda-files '("~/org" "~/org/mobile"))
   (setq diary-file "~/org/diary")
-  ;; Include diary in agenda
   (setq org-agenda-include-diary t)
+  (setq org-archive-location "~/org/.archive.org::* File: %s")
+  ;; No header in archive file
+  (setq org-archive-file-header-format nil)
+  ;; Allow setting refile targets as local file variable
+  (put 'org-refile-targets 'safe-local-variable (lambda (_) t))
   ;; Don't indent lines after editing
   (setq org-edit-src-content-indentation 0)
   ;; Insert log notes into drawer
   (setq org-log-into-drawer t)
   ;; TODO keywords
-  (setq org-todo-keywords '((sequence "TODO" "WIP" "|" "DONE" "MOVED" "CANCELED")))
+  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w)" "|" "DONE(d)" "MOVED(m)" "CANCELED(c)")))
   ;; Add CLOSED timestamp to DONE items
   (setq org-log-done 'time)
-  ;; Allow setting refile targets as local file variable
-  (put 'org-refile-targets 'safe-local-variable (lambda (_) t))
-  ;; Add files to the agenda
-  (setq org-agenda-files '("~/org" "~/org/mobile"))
-  ;; Set archive file
-  (setq org-archive-location "~/org/.archive.org::* File: %s")
-  ;; No header in archive file
-  (setq org-archive-file-header-format nil)
-  ;; Custom templates
-  (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp :results none\n?\n#+END_SRC"))
-  ;; Custom capture templates
+  (add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
+  (add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
   (setq org-capture-templates '(
                                 ("b" "Backlog" entry (file+olp "todo.org" "Backlog")
                                  "* TODO %:link%?" :prepend t)
@@ -54,174 +199,13 @@
                                 ("J" "Journal" entry (file+olp+datetree "journal.org")
                                  "** %<%H:%M> %?")
                                 )))
+#+END_SRC
 
-(use-package! org-reverse-datetree
-  :after org
-  :config
-  ;; Customize defaut date tree format
-  (setq org-reverse-datetree-date-format "%Y-%m-%d %A")
-  (setq org-reverse-datetree-week-format "%Y-%m KW%V")
-  (setq org-reverse-datetree-year-format "%Y"))
+** Custom packages
 
-(use-package! org-sticky-header
-  :hook (org-mode . org-sticky-header-mode)
-  :config
-  (setq org-sticky-header-always-show-header nil)
-  (setq org-sticky-header-full-path 'full)
-  (setq org-sticky-header-outline-path-separator " → "))
-
-(defun my-org-protocol-capture-hook ()
-  (let ((name (cdr (assoc 'name (frame-parameters)))))
-    (when (equal name "org-protocol-capture")
-      (delete-other-windows)
-      (select-frame-set-input-focus (selected-frame)))))
-
-(defun my-org-protocol-after-capture-hook ()
-  (let ((name (cdr (assoc 'name (frame-parameters)))))
-    (when (equal name "org-protocol-capture")
-      (delete-frame))))
-
-(add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
-(add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
-
-;; Terminal
-
-(after! multi-term
-  :config
-  (add-to-list 'term-bind-key-alist '("C-c C-j" . term-line-mode))
-  (add-to-list 'term-bind-key-alist '("C-c C-k" . term-char-mode)))
-
-;; Calendar
-
-;; Start week with monday
-(setq calendar-week-start-day 1)
-;; Use ISO date format
-(setq calendar-date-style 'iso)
-;; Configure holidays
-(setq calendar-holidays (append holiday-general-holidays holiday-christian-holidays))
-
-;; Miscellaneous
-
-;; Enable all disabled commands
-(setq disabled-command-hook nil)
-;; Display line numbers
-(setq display-line-numbers-type t)
-;; Show buffer name in frame title
-(setq-default frame-title-format '("Emacs - %b"))
-;; Use bash as default shell
-(setq shell-file-name "bash")
-(setq explicit-shell-file-name "/bin/bash")
-(setenv "SHELL" shell-file-name)
-;; Set fill column
-(setq-default fill-column 100)
-
-;; Modeline
-
-;; Show only calendar week
-(setq display-time-format " W%V")
-;; Hide system load
-(setq display-time-default-load-average nil)
-;; Show date/time in modeline
-(display-time-mode 1)
-
-;; Buffers
-
-(setq ibuffer-use-other-window t)
-(map! "C-x b" #'ivy-switch-buffer)
-(map! "C-x B" #'+ivy/switch-workspace-buffer)
-(map! "C-x C-b" #'ibuffer)
-
-;; Navigation
-
-(after! ace-window
-  :config
-  ;; Use letters instead of numbers
-  (setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h)))
-
-;; Auto completion
-
-(after! company
-  ;; Show completion after short delay
-  (setq company-idle-delay 0.4)
-  ;; Show numbers to select completion
-  (setq company-show-numbers t)
-  ;; Limit results
-  (setq company-tooltip-limit 9))
-
-(use-package! company-quickhelp
-  :hook (company-mode . company-quickhelp-mode)
-  :config
-  ;; Configure delay util help is shown
-  (setq company-quickhelp-delay 1.2)
-  ;; Limit nubmer of lines
-  (setq company-quickhelp-max-lines 20)
-  ;; Allow colors and fonts
-  (setq company-quickhelp-use-propertized-text t))
-
-;; Other packages
-
-(after! gcmh
-  (setq gcmh-low-cons-threshold 80000000)
-  (setq gcmh-high-cons-threshold most-positive-fixnum))
-
-(after! anzu
-  (global-anzu-mode))
-
-(after! treemacs
-  ;; Collapse directories
-  (setq treemacs-collapse-dirs 10)
-  ;; Customize face of root item
-  (set-face-attribute 'treemacs-root-face nil :height 1.0 :underline nil)
-  ;; Customize root icon
-  (setq treemacs-icon-root-png
-        (concat " "
-                (all-the-icons-octicon "repo" :v-adjust -0.1 :height 1.2 :face 'font-lock-string-face)
-                " ")))
-
-(after! flyspell
-  (unbind-key "C-;" flyspell-mode-map))
-
-(after! plantuml-mode
-  (setq plantuml-jar-path "~/opt/plantuml/plantuml.jar")
-  (setq org-plantuml-jar-path plantuml-jar-path))
-
-;; Show flycheck erros as tooltip
-(use-package! flycheck-pos-tip
-  :commands flycheck-pos-tip-mode)
-
-;; Google thing-at-point
-(use-package! google-this
-  :commands google-this)
-
-;; Go to last change
-(use-package! goto-last-change
-  :commands goto-last-change)
-
-;; Go to link
-(use-package! ace-link
-  :commands ace-link)
-
-;; Visual bookmarks
-(use-package! bm
-  :bind (("<f2>" . bm-next)
-         ("S-<f2>" . bm-previous)
-         ("C-<f2>" . bm-toggle))
-)
-
-(after! simple-httpd
-  :config
-  (setq httpd-port 7070)
-  (setq httpd-host (system-name)))
-
-(use-package! impatient-mode
-  :commands impatient-mode)
-
-;; Pandoc integration
-(use-package! pandoc-mode
-  :commands pandoc-mode)
-
-;; Simple presentations
+#+BEGIN_SRC emacs-lisp :results none
 (use-package! org-present
+  :commands org-present
   :config
   (add-hook 'org-present-mode-hook
             (lambda ()
@@ -236,25 +220,43 @@
               (org-present-show-cursor)
               (org-present-read-write))))
 
-;; Reveal.js
+(use-package! org-reverse-datetree
+  :after org
+  :config
+  (setq org-reverse-datetree-date-format "%Y-%m-%d %A")
+  (setq org-reverse-datetree-week-format "%Y-%m KW%V")
+  (setq org-reverse-datetree-year-format "%Y"))
+
+(use-package! org-sticky-header
+  :hook (org-mode . org-sticky-header-mode)
+  :config
+  (setq org-sticky-header-always-show-header nil)
+  (setq org-sticky-header-full-path 'full)
+  (setq org-sticky-header-outline-path-separator " → "))
+
 (use-package! ox-reveal
   :after ox
   :config
   (setq org-reveal-root "file:///~/opt/reveal.js/"))
+#+END_SRC
 
-;; Deft
-(use-package! deft
-  :config
-  (setq deft-directory "~/Notes/")
-  (setq deft-use-filter-string-for-filename t)
-  (setq deft-org-mode-title-prefix t)
-  (setq deft-file-naming-rules
-      '((noslash . "-")
-        (nospace . "-")
-        (case-fn . downcase))))
+** Functions
 
-;; Key bindings
+#+BEGIN_SRC emacs-lisp :results none
+(defun my-org-protocol-capture-hook ()
+  (let ((name (cdr (assoc 'name (frame-parameters)))))
+    (when (equal name "org-protocol-capture")
+      (delete-other-windows)
+      (select-frame-set-input-focus (selected-frame)))))
 
+(defun my-org-protocol-after-capture-hook ()
+  (let ((name (cdr (assoc 'name (frame-parameters)))))
+    (when (equal name "org-protocol-capture")
+      (delete-frame))))
+#+END_SRC
+* Key bindings
+
+#+BEGIN_SRC emacs-lisp :results none
 (setq my-map (make-sparse-keymap))
 (global-set-key (kbd "C-;") my-map)
 (global-set-key (kbd "C-ö") my-map)
@@ -299,28 +301,16 @@
 (define-key my-map (kbd "& t") 'yas-describe-tables)
 (define-key my-map (kbd "?") 'which-key-show-top-level)
 (define-key my-map (kbd "SPC") 'company-complete)
+#+END_SRC
 
-;; Functions
+* Functions
+** Files
 
-(defun my-create-scratch (name)
-  "Create a new scratch buffer."
-  (interactive)
-  (let ((scratch (generate-new-buffer (concat "*scratch<" name ">*"))))
-    (switch-to-buffer scratch)
-    (funcall initial-major-mode)
-    scratch))
-
-(defun my-workspace-switch (name)
-  (if (+workspace-exists-p name)
-      (+workspace-switch name)
-    (progn
-      (+workspace-switch name t)
-      (my-create-scratch name))))
-
+#+BEGIN_SRC emacs-lisp :results none
 (defun my-open-config ()
   "Open config file."
   (interactive)
-  (find-file "~/.doom.d/config.el"))
+  (find-file "~/.doom.d/config.org"))
 
 (defun my-open-journal ()
   "Open journal."
@@ -336,7 +326,28 @@
   "Open todos."
   (interactive)
   (find-file (concat org-directory "/todo.org")))
+#+END_SRC
 
+** Workspace
+
+#+BEGIN_SRC emacs-lisp :results none
+(defun my-workspace-switch (name)
+  (if (+workspace-exists-p name)
+      (+workspace-switch name)
+    (progn
+      (+workspace-switch name t)
+      (my-create-scratch name))))
+
+(defun my-create-scratch (name)
+  (let ((scratch (generate-new-buffer (concat "*scratch<" name ">*"))))
+    (switch-to-buffer scratch)
+    (funcall initial-major-mode)
+    scratch))
+#+END_SRC
+
+** Ediff
+
+#+BEGIN_SRC emacs-lisp :results none
 (defun my-prepare-diff ()
   "Prepare two buffers for diff."
   (interactive)
@@ -347,8 +358,21 @@
     (split-window-horizontally)
     (switch-to-buffer-other-window b)
     (other-window 1)))
+#+END_SRC
 
-;; Live preview
+** Live preview
+
+*** Markdown
+
+#+BEGIN_SRC emacs-lisp :results none
+(defun my-markdown-preview ()
+  "Preview markdown."
+  (interactive)
+  (unless (process-status "httpd")
+    (httpd-start))
+  (impatient-mode)
+  (imp-set-user-filter 'my-markdown-filter)
+  (imp-visit-buffer))
 
 (defun my-markdown-filter (buffer)
   (princ
@@ -359,17 +383,21 @@
        (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css\"/>
 <body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string))))
    (current-buffer)))
+#+END_SRC
 
-(defun my-markdown-preview ()
-  "Preview markdown."
+*** Org
+
+#+BEGIN_SRC emacs-lisp :results none
+(defun my-org-preview ()
+  "Preview org buffer as HTML."
   (interactive)
   (unless (process-status "httpd")
     (httpd-start))
   (impatient-mode)
-  (imp-set-user-filter 'my-markdown-filter)
+  (imp-set-user-filter 'my-org-filter)
   (imp-visit-buffer))
 
-(defun my-org-html-filter (buffer)
+(defun my-org-filter (buffer)
   (princ
    (with-temp-buffer
      (insert-buffer-substring buffer)
@@ -377,12 +405,4 @@
      (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css\"/>
 <body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string)))
    (current-buffer)))
-
-(defun my-org-html-preview ()
-  "Preview org buffer as HTML."
-  (interactive)
-  (unless (process-status "httpd")
-    (httpd-start))
-  (impatient-mode)
-  (imp-set-user-filter 'my-org-html-filter)
-  (imp-visit-buffer))
+#+END_SRC
