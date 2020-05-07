@@ -191,11 +191,11 @@
   ;; Insert log notes into drawer
   (setq org-log-into-drawer t)
   ;; TODO keywords
-  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w)" "|" "DONE(d)" "MOVED(m)" "CANCELED(c)")))
-  ;; Add CLOSED timestamp to DONE items
-  (setq org-log-done 'time)
+  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w!)" "|" "DONE(d!)" "MOVED(m!)" "CANCELED(c!)")))
   (add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
   (add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
+  (advice-add 'org-store-log-note :after #'+org/close-fold)
+
   (setq org-capture-templates '(
                                 ("b" "Backlog" entry (file+olp "todo.org" "Backlog")
                                  "* TODO %:link%?" :prepend t)
