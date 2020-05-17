@@ -11,7 +11,7 @@
        (ivy +fuzzy +prescient) ; a search engine for love and life
 
        :ui
-       deft                ; notational velocity for Emacs
+       ;;deft              ; notational velocity for Emacs
        doom                ; what makes DOOM look the way it does
        ;;doom-dashboard    ; a nifty splash screen for Emacs
        ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
@@ -126,7 +126,8 @@
        (org                ; organize your plain life in plain text
           +dragndrop       ; drag & drop files/images into org buffers
           +hugo            ; use Emacs for hugo blogging
-          +pandoc)         ; export-with-pandoc support
+          +pandoc          ; export-with-pandoc support
+          +roam)
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
