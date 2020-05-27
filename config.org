@@ -176,6 +176,7 @@
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-directory "~/org/")
 (after! org
+  (setq org-startup-folded t)
   (setq org-agenda-files '("~/org" "~/org/mobile"))
   (setq diary-file "~/org/diary")
   (setq org-agenda-include-diary t)
