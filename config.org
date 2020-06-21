@@ -140,7 +140,8 @@
   (setq undo-tree-history-directory-alist nil))
 
 (after! org-roam
-  (setq org-roam-directory "~/Notes/"))
+  (setq org-roam-directory "~/Notes/")
+  (setq +org-roam-open-buffer-on-find-file nil))
 #+END_SRC
 
 * Custom packages
