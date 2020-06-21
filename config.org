@@ -178,9 +178,8 @@
 (setq org-directory "~/org/")
 (after! org
   (setq org-startup-folded t)
-  (setq org-agenda-files '("~/org" "~/org/mobile"))
+  (setq org-agenda-files '("~/org" "~/org/calendar" "~/org/mobile" "~/org/projects"))
   (setq diary-file "~/org/diary")
-  (setq org-agenda-include-diary t)
   (setq org-archive-location "~/org/.archive.org::* File: %s")
   ;; No header in archive file
   (setq org-archive-file-header-format nil)
@@ -191,7 +190,7 @@
   ;; Insert log notes into drawer
   (setq org-log-into-drawer t)
   ;; TODO keywords
-  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w!)" "|" "DONE(d!)" "MOVED(m!)" "CANCELED(c!)")))
+  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w!)" "|" "DONE(d!)" "CANCELED(c!)")))
   (add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
   (add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
   (advice-add 'org-store-log-note :after #'+org/close-fold)
@@ -233,7 +232,7 @@
   :after org
   :config
   (setq org-reverse-datetree-date-format "%Y-%m-%d %A")
-  (setq org-reverse-datetree-week-format "%Y-%m KW%V")
+  (setq org-reverse-datetree-week-format "%Y-%m W%V")
   (setq org-reverse-datetree-year-format "%Y"))
 
 (use-package! org-sticky-header
