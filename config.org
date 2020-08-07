@@ -118,7 +118,7 @@
   (setq gcmh-high-cons-threshold most-positive-fixnum))
 
 (after! plantuml-mode
-  (setq plantuml-jar-path "~/opt/plantuml/plantuml.jar")
+  (setq plantuml-jar-path "~/.nix-profile/lib/plantuml.jar")
   (setq org-plantuml-jar-path plantuml-jar-path))
 
 (after! simple-httpd
@@ -202,8 +202,6 @@
                                  "* TODO %?" :prepend t)
                                 ("t" "Todo" entry (file+function "todo.org" org-reverse-datetree-goto-read-date-in-file)
                                  "* TODO %?\nSCHEDULED: <%(org-read-date nil nil org-read-date-final-answer)>")
-                                ("N" "Note" entry (file+olp+datetree "notes.org")
-                                 "** %<%H:%M> %:link%?")
                                 ("J" "Journal" entry (file+olp+datetree "journal.org")
                                  "** %<%H:%M> %?")
                                 )))
@@ -276,7 +274,6 @@
 (define-key my-map (kbd "M-x") 'string-inflection-all-cycle)
 (define-key my-map (kbd "f c") 'my-open-config)
 (define-key my-map (kbd "f j") 'my-open-journal)
-(define-key my-map (kbd "f n") 'my-open-notes)
 (define-key my-map (kbd "f t") 'my-open-todos)
 (define-key my-map (kbd "l g") 'google-this)
 (define-key my-map (kbd "n") 'org-roam-find-file)
@@ -324,11 +321,6 @@
   "Open journal."
   (interactive)
   (find-file (concat org-directory "/journal.org")))
-
-(defun my-open-notes ()
-  "Open notes."
-  (interactive)
-  (find-file (concat org-directory "/notes.org")))
 
 (defun my-open-todos ()
   "Open todos."
