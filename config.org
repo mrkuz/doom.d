@@ -190,7 +190,7 @@
   ;; Insert log notes into drawer
   (setq org-log-into-drawer t)
   ;; TODO keywords
-  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w!)" "|" "DONE(d!)" "CANCELED(c!)")))
+  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w!)" "|" "DONE(d!)" "CANCELED(c!)" "PAUSED(p!)")))
   (add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
   (add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
   (advice-add 'org-store-log-note :after #'+org/close-fold)
