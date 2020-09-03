@@ -142,6 +142,9 @@
 (after! org-roam
   (setq org-roam-directory "~/Notes/")
   (setq +org-roam-open-buffer-on-find-file nil))
+
+(after! persp-mode
+  (setq persp-emacsclient-init-frame-behaviour-override nil))
 #+END_SRC
 
 * Custom packages
