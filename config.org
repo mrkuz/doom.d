@@ -60,7 +60,7 @@
 #+BEGIN_SRC emacs-lisp :results none
 ;; Use bash as default shell
 (setq shell-file-name "bash")
-(setq explicit-shell-file-name "/bin/bash")
+(setq explicit-shell-file-name "/usr/bin/env bash")
 (setenv "SHELL" shell-file-name)
 
 (after! multi-term
@@ -141,6 +141,7 @@
 
 (after! org-roam
   (setq org-roam-directory "~/Notes/")
+  ;; Disable automatic opening of org-roam buffer
   (setq +org-roam-open-buffer-on-find-file nil))
 
 (after! persp-mode
@@ -193,7 +194,7 @@
   ;; Insert log notes into drawer
   (setq org-log-into-drawer t)
   ;; TODO keywords
-  (setq org-todo-keywords '((sequence "TODO(t)" "WIP(w!)" "|" "DONE(d!)" "CANCELED(c!)" "PAUSED(p!)")))
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w!)" "|" "DONE(d!)" "CANCELED(c!)" "PAUSED(p!)")))
   (add-hook 'org-capture-mode-hook 'my-org-protocol-capture-hook)
   (add-hook 'org-capture-after-finalize-hook 'my-org-protocol-after-capture-hook)
   (advice-add 'org-store-log-note :after #'+org/close-fold)
@@ -203,8 +204,6 @@
                                  "* TODO %:link%?" :prepend t)
                                 ("n" "Next" entry (file+olp "todo.org" "Next")
                                  "* TODO %?" :prepend t)
-                                ("t" "Todo" entry (file+function "todo.org" org-reverse-datetree-goto-read-date-in-file)
-                                 "* TODO %?\nSCHEDULED: <%(org-read-date nil nil org-read-date-final-answer)>")
                                 ("J" "Journal" entry (file+olp+datetree "journal.org")
                                  "** %<%H:%M> %?")
                                 )))
