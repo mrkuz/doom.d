@@ -187,6 +187,8 @@
   (setq org-archive-location "~/org/.archive.org::* File: %s")
   ;; No header in archive file
   (setq org-archive-file-header-format nil)
+  ;; Set default refile target to local file
+  (setq org-refile-targets '((nil :maxlevel . 1)))
   ;; Allow setting refile targets as local file variable
   (put 'org-refile-targets 'safe-local-variable (lambda (_) t))
   ;; Don't indent lines after editing
